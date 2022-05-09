@@ -32,7 +32,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 class qbehaviour_adaptivemoopt_type extends question_behaviour_type {
     public function is_archetypal() {
-        return true;
+        //should be false for type specific behaviours,
+        //so you can only choose the base adaptive behaviour and moopt will automatically choose the right moopt specific behaviour
+        return false;
     }
 
     public function allows_multiple_submitted_responses() {
