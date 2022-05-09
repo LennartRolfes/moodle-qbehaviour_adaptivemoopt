@@ -2,6 +2,8 @@
 
 Question behaviour adaptive mode for MooPT. Belongs to bachelor thesis https://lab.it.hs-hannover.de/7mq-a3b-u1/bachelorarbeit-lennart-rolfes
 
+This is the code repository
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
