@@ -18,7 +18,7 @@
  * Question behaviour where the student have multiple attempts at the question before moving on to the next question
  *
  * @package qbehaviour
- * @subpackage adaptive
+ * @subpackage adaptivemoopt
  * @copyright 2009 The Open University
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
