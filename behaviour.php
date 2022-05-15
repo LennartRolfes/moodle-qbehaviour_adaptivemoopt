@@ -304,7 +304,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         global $DB;
 
         $processdbid = $pendingstep->get_qt_var('gradeprocessdbid');
-        $exists = $DB->record_exists('qtype_moopt_gradeprocess', ['id' => $processdbid]);
+        $exists = $DB->record_exists('qtype_moopt_gradeprocesses', ['id' => $processdbid]);
 
         if (!$exists) {
             //It´s a regrade, discard this *old* result
@@ -359,7 +359,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         global $DB;
 
         $processdbid = $pendingstep->get_qt_var('gradeprocessdbid');
-        $exists = $DB->record_exists('qtype_moopt_gradeprocess', ['id' => $processdbid]);
+        $exists = $DB->record_exists('qtype_moopt_gradeprocesses', ['id' => $processdbid]);
         if(!$exists){
             //It´s a regrade, discard this old step.
             return question_attempt::DISCARD;
