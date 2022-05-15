@@ -234,7 +234,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
         $laststep = $this->qa->get_last_step();
         $response = $laststep->get_qt_data();
-        if (!$this->qa->is_gradable_response($response)){
+        if (!$this->question->is_gradable_response($response)){
             $pendingstep->set_state(question_state::$gaveup);
             //TODO: klären ob es auch negative fractions geben kann (get_min_fraction methode in moopt fehlt daher base implementierung mit return 0)
             $pendingstep->set_fraction(0);
