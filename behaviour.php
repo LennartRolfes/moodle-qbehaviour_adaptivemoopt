@@ -216,7 +216,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
         $state = $this->question->grade_response_asynch($this->qa, $responsefiles ?? [], $freetextanswers);
         if ($state == question_state::$finished){
-            $state = question_state::$todo;
+            $state = question_state::$complete;
         }
 
         $pendingstep->set_state($state);
