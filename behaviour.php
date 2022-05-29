@@ -220,7 +220,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         }
 
         $pendingstep->set_state($state);
-        $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         $pendingstep->set_new_response_summary($this->question->summarise_response($response));
 
         return question_attempt::KEEP;
@@ -287,7 +286,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
             //TODO: check ob es auch negative geben kann und ob das mit 0 so richtig ist
             $pendingstep->set_fraction(0);
-            $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         }
 
         return question_attempt::KEEP;
@@ -344,6 +342,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         }
 
         $pendingstep->set_behaviour_var('_rawfraction', $fraction);
+        $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         $pendingstep->set_new_response_summary($this->question->summarise_response($pendingstep->get_all_data()));
 
         // If this is the real result for a regrade we should update the quiz_overview_regrades table
@@ -368,6 +367,9 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             return question_attempt::DISCARD;
         }
 
+        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
+
+        $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         $pendingstep->set_state(question_state::$needsgrading);
 
         return question_attempt::KEEP;
