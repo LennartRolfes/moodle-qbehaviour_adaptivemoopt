@@ -343,7 +343,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
         $pendingstep->set_behaviour_var('_rawfraction', $fraction);
         $pendingstep->set_behaviour_var('_try', $prevtries + 1);
-        $pendingstep->set_behaviour_var('_showFeedback', 1);
+        $pendingstep->set_behaviour_var('_showGradedFeedback', 1);
         $pendingstep->set_new_response_summary($this->question->summarise_response($pendingstep->get_all_data()));
 
         // If this is the real result for a regrade we should update the quiz_overview_regrades table
@@ -371,7 +371,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
 
         $pendingstep->set_behaviour_var('_try', $prevtries + 1);
-        $pendingstep->set_behaviour_var('_showFeedback', 1);
         $pendingstep->set_state(question_state::$needsgrading);
 
         return question_attempt::KEEP;
