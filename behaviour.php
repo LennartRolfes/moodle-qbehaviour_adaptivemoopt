@@ -293,6 +293,10 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
     public function process_save(question_attempt_pending_step $pendingstep){
         $status = parent::process_save($pendingstep);
+        $prevresponse = $this->qa->get_last_step_with_behaviour_var('submit')->get_qt_data();
+        if ($this->question->is_same_response($prevresponse, $pendingstep->get_qt_data())){
+            return question_attempt::DISCARD;
+        }
         $prevgrade = $this->qa->get_fraction();
         if (!is_null($prevgrade)) {
             $pendingstep->set_fraction($prevgrade);
