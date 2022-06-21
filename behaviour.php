@@ -170,7 +170,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
 
 
-        if ($this->question->is_same_response($response, $prevresponse)) {
+        if ($this->question->is_same_response($prevresponse, $response)) {
             return question_attempt::DISCARD;
         }
 
@@ -244,7 +244,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
             if ($laststep->has_behaviour_var('_try')) {
                 // Last answer was graded, we want to regrade it. Otherwise the answer
-                // has changed, and we are grading a new try.
+                // has changed, and we are grading a new try. //TODO: prevtries wird nicht genutzt
                 $prevtries -= 1;
             }
 
