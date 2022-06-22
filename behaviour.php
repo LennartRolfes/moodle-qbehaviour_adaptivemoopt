@@ -165,11 +165,10 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             return $status;
         }
 
-        $prevstep = $this->qa->get_last_step_with_behaviour_var('_try');
+        //get last step with behaviour var submit, because it contains the answer.
+        $prevstep = $this->qa->get_last_step_with_behaviour_var('submit');
         $prevresponse = $prevstep->get_qt_data();
-        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
 
-        //TODO dran denken, dass wenn man get last step with 'submit' macht, geprüft werden muss ob es der eigene ist
         if ($this->question->is_same_response($prevresponse, $response)) {
             return question_attempt::DISCARD;
         }
