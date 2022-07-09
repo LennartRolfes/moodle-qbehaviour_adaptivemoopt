@@ -165,7 +165,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             return $status;
         }
 
-        //get last step with behaviour var submit, because it contains the answer.
+        //get last step with behaviour var "submit", because it contains the answer.
         $prevstep = $this->qa->get_last_step_with_behaviour_var('submit');
         $prevresponse = $prevstep->get_qt_data();
 
@@ -465,66 +465,5 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $details->improvable = $this->is_state_improvable($gradedstep->get_state());
 
         return $details;
-    }
-}
-
-/**
- * This class encapsulates all the information about the current state-of-play
- * scoring-wise. It is used to communicate between the beahviour and the renderer.
- *
- * @copyright  2012 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class qbehaviour_adaptive_mark_details {
-    /** @var question_state the current state of the question. */
-    public $state;
-
-    /** @var float the maximum mark for this question. */
-    public $maxmark;
-
-    /** @var float the current mark for this question. */
-    public $actualmark;
-
-    /** @var float the raw mark for this question before penalties were applied. */
-    public $rawmark;
-
-    /** @var float the the amount of additional penalty this attempt attracted. */
-    public $currentpenalty;
-
-    /** @var float the total that will apply to future attempts. */
-    public $totalpenalty;
-
-    /** @var bool whether it is possible for this mark to be improved in future. */
-    public $improvable;
-
-    /**
-     * Constructor.
-     * @param question_state $state
-     */
-    public function __construct($state, $maxmark = null, $actualmark = null, $rawmark = null,
-                                $currentpenalty = null, $totalpenalty = null, $improvable = null) {
-        $this->state          = $state;
-        $this->maxmark        = $maxmark;
-        $this->actualmark     = $actualmark;
-        $this->rawmark        = $rawmark;
-        $this->currentpenalty = $currentpenalty;
-        $this->totalpenalty   = $totalpenalty;
-        $this->improvable     = $improvable;
-    }
-
-    /**
-     * Get the marks, formatted to a certain number of decimal places, in the
-     * form required by calls like get_string('gradingdetails', 'qbehaviour_adaptive', $a).
-     * @param int $markdp the number of decimal places required.
-     * @return array ready to substitute into language strings.
-     */
-    public function get_formatted_marks($markdp) {
-        return array(
-            'max'          => format_float($this->maxmark,        $markdp),
-            'cur'          => format_float($this->actualmark,     $markdp),
-            'raw'          => format_float($this->rawmark,        $markdp),
-            'penalty'      => format_float($this->currentpenalty, $markdp),
-            'totalpenalty' => format_float($this->totalpenalty,   $markdp),
-        );
     }
 }
