@@ -112,8 +112,14 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         if ($step->has_behaviour_var('comment')) {
             return $this->summarise_manual_comment($step);
         } else if ($step->has_behaviour_var('finish')) {
-            return get_string('finished', 'qbehaviour_adaptivemoopt',
-                get_string('gradingsummary', 'qbehaviour_adaptivemoopt'));
+            $state = $step->get_state();
+            if ($state == question_state::$gradedright){
+                return get_string('finished', 'qbehaviour_adaptivemoopt',
+                    get_string('alreadygradedsummary', 'qbehaviour_adaptivemoopt'));
+            } else {
+              return get_string('finished', 'qbehaviour_adaptivemoopt',
+                    get_string('gradingsummary', 'qbehaviour_adaptivemoopt'));
+            }
         } else if ($step->has_behaviour_var('submit')) {
             return get_string('submitted', 'question',
                 get_string('gradingsummary', 'qbehaviour_adaptivemoopt'));
@@ -251,14 +257,14 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $pendingstep->set_state(question_state::$gradedright);
 
         } else if (!$this->question->is_gradable_response($response)){
-            //$response is a different from the last graded response
+            //$response is a different from the last graded response but is not gradable
 
             $pendingstep->set_state(question_state::$gaveup);
-            //TODO: klären ob es auch negative fractions geben kann (get_min_fraction methode in moopt fehlt daher base implementierung mit return 0)
             $pendingstep->set_fraction(0);
 
         } else {
-            //$response is a different from the last graded response
+            //$response is a different from the last graded response and gradable
+
             //get moopt data from response
             if($this->question->enablefilesubmissions) {
                 // We are in regrade
@@ -296,7 +302,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $state = $this->question->grade_response_asynch($this->qa, $responsefiles ?? [], $freetextanswers ?? []);
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
-            //TODO: check ob es auch negative geben kann und ob das mit 0 so richtig ist
             $pendingstep->set_fraction(0);
         }
 
