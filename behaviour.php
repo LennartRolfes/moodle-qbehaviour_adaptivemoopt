@@ -445,7 +445,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
     }
 
     /**
-     * Actually populate the qbehaviour_adaptive_mark_details object.
+     * Actually populate the qbehaviour_adaptivemoopt_mark_details object.
      * @param question_attempt_step $gradedstep the step that holds the relevant mark details.
      * @param question_state $state the state corresponding to $gradedstep.
      * @param unknown_type $maxmark the maximum mark for this question_attempt.

@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Renderer for outputting parts of a question belonging to the legacy
- * adaptive behaviour.
+ * Renderer for outputting parts of a question belonging to the
+ * adaptive behaviour for MooPT questions.
  *
  * @package    qbehaviour
  * @subpackage adaptive
@@ -29,8 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Renderer for outputting parts of a question belonging to the legacy
- * adaptive behaviour.
+ * Renderer for outputting parts of a question belonging to the
+ * adaptive behaviour for MooPT questions.
  *
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -56,10 +56,10 @@ class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
 
     /**
      * Display the scoring information about an adaptive attempt.
-     * @param qbehaviour_adaptive_mark_details contains all the score details we need.
+     * @param qbehaviour_adaptivemoopt_mark_details contains all the score details we need.
      * @param question_display_options $options display options.
      */
-    public function render_adaptive_marks(qbehaviour_adaptive_mark_details $details, question_display_options $options) {
+    public function render_adaptive_marks(qbehaviour_adaptivemoopt_mark_details $details, question_display_options $options) {
         if ($details->state == question_state::$todo || $options->marks < question_display_options::MARK_AND_MAX) {
             // No grades yet.
             return '';
@@ -75,16 +75,16 @@ class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
 
     /**
      * Display the information about the penalty calculations.
-     * @param qbehaviour_adaptive_mark_details contains all the score details we need.
+     * @param qbehaviour_adaptivemoopt_mark_details contains all the score details we need.
      * @param question_display_options $options display options.
      * @return string html fragment
      */
-    protected function grading_details(qbehaviour_adaptive_mark_details $details, question_display_options $options) {
+    protected function grading_details(qbehaviour_adaptivemoopt_mark_details $details, question_display_options $options) {
 
         $mark = $details->get_formatted_marks($options->markdp);
 
         if ($details->currentpenalty == 0 && $details->totalpenalty == 0) {
-            return get_string('gradingdetails', 'qbehaviour_adaptive', $mark);
+            return get_string('gradingdetails', 'qbehaviour_adaptivemoopt', $mark);
         }
 
         $output = '';
@@ -92,20 +92,20 @@ class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
         // Print details of grade adjustment due to penalties
         if ($details->rawmark != $details->actualmark) {
             if (!$details->improvable) {
-                return get_string('gradingdetailswithadjustment', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetailswithadjustment', 'qbehaviour_adaptivemoopt', $mark);
             } else if ($details->totalpenalty > $details->currentpenalty) {
-                return get_string('gradingdetailswithadjustmenttotalpenalty', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetailswithadjustmenttotalpenalty', 'qbehaviour_adaptivemoopt', $mark);
             } else {
-                return get_string('gradingdetailswithadjustmentpenalty', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetailswithadjustmentpenalty', 'qbehaviour_adaptivemoopt', $mark);
             }
 
         } else {
             if (!$details->improvable) {
-                return get_string('gradingdetails', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetails', 'qbehaviour_adaptivemoopt', $mark);
             } else if ($details->totalpenalty > $details->currentpenalty) {
-                return get_string('gradingdetailswithtotalpenalty', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetailswithtotalpenalty', 'qbehaviour_adaptivemoopt', $mark);
             } else {
-                return get_string('gradingdetailswithpenalty', 'qbehaviour_adaptive', $mark);
+                return get_string('gradingdetailswithpenalty', 'qbehaviour_adaptivemoopt', $mark);
             }
         }
 
@@ -116,6 +116,6 @@ class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
      * Display information about a disregarded (incomplete) response.
      */
     protected function disregarded_info() {
-        return get_string('disregardedwithoutpenalty', 'qbehaviour_adaptive');
+        return get_string('disregardedwithoutpenalty', 'qbehaviour_adaptivemoopt');
     }
 }
