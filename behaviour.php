@@ -356,13 +356,25 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
         $state = question_state::graded_state_for_fraction($fraction);
         $pendingstep->set_fraction(max($prevbest, $this->adjusted_fraction($fraction, $prevtries)));
-        if ($prevstep->get_state() == question_state::$complete) {
-            $pendingstep->set_state(question_state::$complete);
-        } else if ($state == question_state::$gradedright) {
-            $pendingstep->set_state(question_state::$complete);
+
+        // We need to know if a submit or a finish action initiated this grading
+        // finish: we need to set a finished state
+        // submit: we need to set an active state
+        $laststep = $this->qa->get_last_step();
+        if ($laststep->has_behaviour_var('finish')){
+            if ($prevstep->get_state() == question_state::$complete) {
+                $state = question_state::$gradedright;
+            }
         } else {
-            $pendingstep->set_state(question_state::$todo);
+            if ($prevstep->get_state() == question_state::$complete) {
+                $state = question_state::$complete;
+            } else if ($state == question_state::$gradedright) {
+                $state = question_state::$complete;
+            } else {
+                $state = question_state::$todo;
+            }
         }
+        $pendingstep->set_state($state);
 
         $pendingstep->set_behaviour_var('_rawfraction', $fraction);
         $pendingstep->set_behaviour_var('_try', $prevtries + 1);
