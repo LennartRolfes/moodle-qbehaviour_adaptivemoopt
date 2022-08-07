@@ -392,7 +392,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
 
         $pendingstep->set_behaviour_var('_try', $prevtries + 1);
-        $pendingstep->set_behaviour_var('_showGradedFeedback', 1);
         $pendingstep->set_state(question_state::$needsgrading);
 
         return question_attempt::KEEP;
