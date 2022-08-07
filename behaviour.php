@@ -224,7 +224,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $state = question_state::$complete;
             $pendingstep->set_behaviour_var('_completeForGrading', 1);
         } elseif ($state == question_state::$needsgrading){
-            $pendingstep->set_behaviour_var('showGradedFeedback', 1 );
+            $pendingstep->set_behaviour_var('_showGradedFeedback', 1 );
         }
         $pendingstep->set_state($state);
         $pendingstep->set_new_response_summary($this->question->summarise_response($response));
