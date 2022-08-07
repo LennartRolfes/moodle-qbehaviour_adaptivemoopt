@@ -247,16 +247,14 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         if($laststep->has_behaviour_var('gradingresult') && $laststep->has_qt_var('score')) {
 
             // Last answer was already graded and is still the same (If you press the "Finish attempt ..." button,
-            // process_save will be called and checks is_same_response. True = discard step, false = keep step
-            // -> so the last step is a step with a response and without a grading result and score
+            // process_save will be called and checks is_same_response: True = discard step, false = keep step)
+            // -> if the answer wasn't already graded or has changed there wouldn't be a gradingresult or a score in the latest step
             // We will not regrade the response here since its already graded (like moodle adaptive does)
-
-            //Hier müssen die alten step daten ins das jetztige step objekt geschrieben werden und der state auf finished gesetzt werden
 
             $fraction = $this->qa->get_fraction(); //sollte im moment noch die richtige sein muss gucken wies aussieht wenns abzüge gab ob die dann da noch richtig gespeichert ist
 
             $pendingstep->set_fraction($fraction);
-            $pendingstep->set_state(question_state::$gradedright);
+            $pendingstep->set_state(question_state::graded_state_for_fraction($fraction));
 
         } else if (!$this->question->is_gradable_response($response)){
             //$response is a different from the last graded response but is not gradable
