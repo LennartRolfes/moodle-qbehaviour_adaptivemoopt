@@ -234,7 +234,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         global $DB;
 
         if ($this->qa->get_state()->is_finished()) {
-            return question_attempt::DISCARD;
+            return question_attempt::DISCARD; //important condition -> when state is needsgrading state is finished!
         }
 
         $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
@@ -310,15 +310,17 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
     public function process_save(question_attempt_pending_step $pendingstep){
         $status = parent::process_save($pendingstep);
-        $prevresponse = $this->qa->get_last_step_with_behaviour_var('submit')->get_qt_data();
-        if ($this->question->is_same_response($prevresponse, $pendingstep->get_qt_data())){
-            return question_attempt::DISCARD;
+        if($status == question_attempt::KEEP){
+            $prevresponse = $this->qa->get_last_step_with_behaviour_var('submit')->get_qt_data();
+            if ($this->question->is_same_response($prevresponse, $pendingstep->get_qt_data())){
+                return question_attempt::DISCARD;
+            }
+            $prevgrade = $this->qa->get_fraction();
+            if (!is_null($prevgrade)) {
+                $pendingstep->set_fraction($prevgrade);
+            }
+            $pendingstep->set_state(question_state::$todo);
         }
-        $prevgrade = $this->qa->get_fraction();
-        if (!is_null($prevgrade)) {
-            $pendingstep->set_fraction($prevgrade);
-        }
-        $pendingstep->set_state(question_state::$todo);
         return $status;
     }
 
