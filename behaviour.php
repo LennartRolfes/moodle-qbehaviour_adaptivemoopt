@@ -355,7 +355,8 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         }
 
         $state = question_state::graded_state_for_fraction($fraction);
-        $pendingstep->set_fraction(max($prevbest, $this->adjusted_fraction($fraction, $prevtries)));
+        $adjustedfraction = max($prevbest, $this->adjusted_fraction($fraction, $prevtries));
+        $pendingstep->set_fraction($adjustedfraction);
 
         // We need to know if a submit or a finish action initiated this grading
         // finish: we need to set a finished state
@@ -386,7 +387,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $regraderecord = $DB->get_record('quiz_overview_regrades',
             ['questionusageid' => $this->qa->get_usage_id(), 'slot' => $this->qa->get_slot()]);
         if ($regraderecord) {
-            $regraderecord->newfraction = $fraction;
+            $regraderecord->newfraction = $adjustedfraction;
             $DB->update_record('quiz_overview_regrades', $regraderecord);
         }
 
