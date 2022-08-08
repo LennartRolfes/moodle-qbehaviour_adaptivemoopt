@@ -38,6 +38,9 @@ defined('MOODLE_INTERNAL') || die();
 class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
 
     public function controls(question_attempt $qa, question_display_options $options) {
+        if ($qa->get_last_step()->has_behaviour_var('_completeForGrading')){
+            $options->readonly = true;
+        }
         return $this->submit_button($qa, $options);
     }
 
