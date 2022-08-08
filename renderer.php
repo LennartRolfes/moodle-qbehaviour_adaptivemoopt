@@ -19,7 +19,7 @@
  * adaptive behaviour for MooPT questions.
  *
  * @package    qbehaviour
- * @subpackage adaptive
+ * @subpackage adaptivemoopt
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
