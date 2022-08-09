@@ -112,8 +112,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         if ($step->has_behaviour_var('comment')) {
             return $this->summarise_manual_comment($step);
         } else if ($step->has_behaviour_var('finish')) {
-            $state = $step->get_state();
-            if ($state == question_state::$gradedright){
+            if ($step->get_state()->is_graded()){
                 return get_string('finished', 'qbehaviour_adaptivemoopt',
                     get_string('alreadygradedsummary', 'qbehaviour_adaptivemoopt'));
             } else {
