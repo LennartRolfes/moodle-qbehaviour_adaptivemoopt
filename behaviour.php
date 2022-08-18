@@ -84,6 +84,11 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $options->numpartscorrect = $save->numpartscorrect;
 
         }
+
+        // If the student is waiting for a grading response show feedback to display the "submission queued for grading" bar below the question
+        if ($this->qa->get_last_step()->has_behaviour_var("_completeForGrading")) {
+            $options->feedback = $save->feedback;
+        }
     }
 
     protected function adjusted_fraction($fraction, $prevtries){
