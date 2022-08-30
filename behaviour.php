@@ -68,7 +68,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         return $this->question->get_right_answer_summary();
     }
 
-    //not moopt specific
+    //moopt specific
     public function adjust_display_options(question_display_options $options) {
         // Save some bits so we can put them back later.
         $save = clone($options);
@@ -272,7 +272,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             //get moopt data from response
             if($this->question->enablefilesubmissions) {
                 // We are in regrade
-                $record = $DB->get_record('question_usage', array('id' => $this->qa->get_usage_id()), 'contextid');
+                $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
                 $qubacontextid = $record->contexid;
                 $responsefiles = $this->qa->get_last_qt_files('answer', $qubacontextid);
             }

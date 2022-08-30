@@ -18,7 +18,7 @@
  * Version information for the calculated question type.
  *
  * @package    qbehaviour
- * @subpackage immediatefeedback
+ * @subpackage adaptivemoopt
  * @copyright  2011 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,6 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qbehaviour_adaptivemoopt';
 $plugin->release   = '0.1.1';
-$plugin->version   = 2022081800;
+$plugin->version   = 2022083000;
 $plugin->requires  = 2018112800;
 $plugin->maturity  = MATURITY_ALPHA;
