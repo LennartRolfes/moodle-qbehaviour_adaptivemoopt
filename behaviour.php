@@ -273,7 +273,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             if($this->question->enablefilesubmissions) {
                 // We are in regrade
                 $record = $DB->get_record('question_usages', array('id' => $this->qa->get_usage_id()), 'contextid');
-                $qubacontextid = $record->contexid;
+                $qubacontextid = $record->contextid;
                 $responsefiles = $this->qa->get_last_qt_files('answer', $qubacontextid);
             }
 
