@@ -33,7 +33,7 @@ $string['gradingsummary'] = 'The submission has been sent to the grader for grad
 $string['gradedsummary'] = 'The submission has been graded by the grader';
 $string['alreadygradedsummary'] = 'The submission has already been graded. The last score was reused and the question attempt was finished.';
 
-$string['checkIfChangeMessage'] = 'Be sure to check again after changing the submission. A finish will not regrade the new answer';
+$string['checkIfChangeMessage'] = 'Be sure to check again after changing the submission. A finish will not regrade the new answer.';
 
 //general
 $string['notcomplete'] = 'Not complete';
