@@ -316,7 +316,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $status = parent::process_save($pendingstep);
         if($status == question_attempt::KEEP){
             $prevresponse = $this->qa->get_last_step_with_behaviour_var('submit')->get_qt_data();
-            if (($this->question->enablefilesubmissions && !is_null($prevresponse)) ||
+            if (($this->question->enablefilesubmissions && !empty($prevresponse)) ||
                                 $this->question->is_same_response($prevresponse, $pendingstep->get_qt_data())){
                 return question_attempt::DISCARD;
             }
