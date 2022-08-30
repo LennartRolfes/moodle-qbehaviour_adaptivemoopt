@@ -46,14 +46,17 @@ class qbehaviour_adaptivemoopt_renderer extends qbehaviour_renderer {
 
     public function feedback(question_attempt $qa, question_display_options $options) {
 
+        // informs the student to check if they change the answer. A finish will not grade the new answer.
+        $checkIfChangeMessage = html_writer::nonempty_tag('div', 'test');
+
         // If the latest answer was invalid, display an informative message.
         if ($qa->get_state() == question_state::$invalid) {
-            return html_writer::nonempty_tag('div', $this->disregarded_info(),
+            return $checkIfChangeMessage . html_writer::nonempty_tag('div', $this->disregarded_info(),
                 array('class' => 'gradingdetails'));
         }
 
         // Otherwise get the details.
-        return $this->render_adaptive_marks(
+        return $checkIfChangeMessage . $this->render_adaptive_marks(
             $qa->get_behaviour()->get_adaptive_marks(), $options);
     }
 
