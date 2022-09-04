@@ -240,10 +240,8 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         global $DB;
 
         if ($this->qa->get_state()->is_finished()) {
-            return question_attempt::DISCARD; //important condition -> when state is needsgrading state is finished!
+            return question_attempt::DISCARD;
         }
-
-        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
 
         $laststep = $this->qa->get_last_step();
         $response = $laststep->get_qt_data();
@@ -255,10 +253,19 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             // -> if the answer wasn't already graded or has changed there wouldn't be a gradingresult or a score in the latest step
             // We will not regrade the response here since its already graded (like moodle adaptive does)
 
-            $fraction = $this->qa->get_fraction(); //sollte im moment noch die richtige sein muss gucken wies aussieht wenns abzüge gab ob die dann da noch richtig gespeichert ist
+            $fraction = $this->qa->get_fraction();
 
             $pendingstep->set_fraction($fraction);
             $pendingstep->set_state(question_state::graded_state_for_fraction($fraction));
+
+        } else if ($laststep->has_behaviour_var('submit')){
+            // Last answer has been submitted but the grading hasn't finished yet.
+            // To tell the gradingresult action a finished state should be set we save the step at this point
+            // (gradingresult will check if behaviour vars have 'finish').
+            // There wouldn't be a submit var if the answer has changed, cause the process_save() method saved it.
+
+            $pendingstep->set_state(question_state::$finished);
+            $pendingstep->set_fraction(0);
 
         } else if (!$this->question->is_gradable_response($response)){
             //$response is a different from the last graded response but is not gradable
