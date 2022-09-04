@@ -120,9 +120,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             if ($step->get_state()->is_graded()){
                 return get_string('finished', 'qbehaviour_adaptivemoopt',
                     get_string('alreadygradedsummary', 'qbehaviour_adaptivemoopt'));
-            } else if($this->qa->get_step($step->get_id() - 1)->has_behaviour_var('submit')){
-                return get_string('finished', 'qbehaviour_adaptivemoopt',
-                    get_string('waitingforgradingsummary', 'qbehaviour_adaptivemoopt'));
             } else {
               return get_string('finished', 'qbehaviour_adaptivemoopt',
                     get_string('gradingsummary', 'qbehaviour_adaptivemoopt'));
