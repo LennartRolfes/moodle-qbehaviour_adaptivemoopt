@@ -246,7 +246,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $laststep = $this->qa->get_last_step();
         $response = $laststep->get_qt_data();
 
-        if($laststep->has_behaviour_var('gradingresult') && $laststep->has_qt_var('score')) {
+        if($laststep->has_behaviour_var('gradingresult')) {
 
             // Last answer was already graded and is still the same (If you press the "Finish attempt ..." button,
             // process_save will be called and checks is_same_response: True = discard step, false = keep step)
@@ -268,13 +268,13 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $pendingstep->set_fraction(0);
 
         } else if (!$this->question->is_gradable_response($response)){
-            //$response is a different from the last graded response but is not gradable
+            //$response is a different from the last graded response and unsubmitted but is not gradable
 
             $pendingstep->set_state(question_state::$gaveup);
             $pendingstep->set_fraction(0);
 
         } else {
-            //$response is a different from the last graded response and gradable
+            //$response is a different from the last graded response, submitted and gradable
 
             //get moopt data from response
             if($this->question->enablefilesubmissions) {
@@ -313,7 +313,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $state = $this->question->grade_response_asynch($this->qa, $responsefiles ?? [], $freetextanswers ?? []);
             $pendingstep->set_state($state);
             $pendingstep->set_new_response_summary($this->question->summarise_response($response));
-            $pendingstep->set_fraction(0);
         }
 
         return question_attempt::KEEP;
