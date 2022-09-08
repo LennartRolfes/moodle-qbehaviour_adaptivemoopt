@@ -248,7 +248,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
 
         if($laststep->has_behaviour_var('gradingresult')) {
 
-            // Last answer was already graded and is still the same (If you press the "Finish attempt ..." button,
+            // Case 1: last answer was already graded and is still the same (If you press the "Finish attempt ..." button,
             // process_save will be called and checks is_same_response: True = discard step, false = keep step)
             // -> if the answer wasn't already graded or has changed there wouldn't be a gradingresult or a score in the latest step
             // We will not regrade the response here since its already graded (like moodle adaptive does)
@@ -259,7 +259,7 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $pendingstep->set_state(question_state::graded_state_for_fraction($fraction));
 
         } else if ($laststep->has_behaviour_var('submit')){
-            // Last answer has been submitted but the grading hasn't finished yet.
+            // Case 2: last answer has been submitted but the grading hasn't finished yet.
             // To tell the gradingresult action a finished state should be set we save the step at this point
             // (gradingresult will check if behaviour vars have 'finish').
             // There wouldn't be a submit var if the answer has changed, cause the process_save() method saved it.
@@ -268,13 +268,13 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $pendingstep->set_fraction(0);
 
         } else if (!$this->question->is_gradable_response($response)){
-            //$response is a different from the last graded response and unsubmitted but is not gradable
+            // Case 3: $response is a different from the last graded response and unsubmitted but is not gradable
 
             $pendingstep->set_state(question_state::$gaveup);
             $pendingstep->set_fraction(0);
 
         } else {
-            //$response is a different from the last graded response, submitted and gradable
+            // Case 4: $response is a different from the last graded response, submitted and gradable
 
             //get moopt data from response
             if($this->question->enablefilesubmissions) {
@@ -346,13 +346,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             return question_attempt::DISCARD;
         }
 
-        $prevstep = $this->qa->get_last_step_with_behaviour_var('_try');
-        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
-        $prevbest = $this->qa->get_fraction();
-        if(is_null($prevbest)){
-            $prevbest = 0;
-        }
-
         if ($pendingstep->has_qt_var('score')){
             $score = $pendingstep->get_qt_var('score');
             $maxmark = $this->qa->get_max_mark();
@@ -365,9 +358,17 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             $fraction = 0;
         }
 
-        $state = question_state::graded_state_for_fraction($fraction);
+        $prevstep = $this->qa->get_last_step_with_behaviour_var('_try');
+        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
+        $prevbest = $this->qa->get_fraction();
+        if(is_null($prevbest)){
+            $prevbest = 0;
+        }
+
         $adjustedfraction = max($prevbest, $this->adjusted_fraction($fraction, $prevtries));
         $pendingstep->set_fraction($adjustedfraction);
+
+        $state = question_state::graded_state_for_fraction($fraction);
 
         // We need to know if a submit or a finish action initiated this grading
         // finish: we need to set a finished state
@@ -391,7 +392,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
         $pendingstep->set_behaviour_var('_rawfraction', $fraction);
         $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         $pendingstep->set_behaviour_var('_showGradedFeedback', 1);
-        $pendingstep->set_new_response_summary($this->question->summarise_response($pendingstep->get_all_data()));
 
         // If this is the real result for a regrade we should update the quiz_overview_regrades table
         // to properly display the new result.
@@ -415,9 +415,6 @@ class qbehaviour_adaptivemoopt extends question_behaviour_with_multiple_tries {
             return question_attempt::DISCARD;
         }
 
-        $prevtries = $this->qa->get_last_behaviour_var('_try', 0);
-
-        $pendingstep->set_behaviour_var('_try', $prevtries + 1);
         $pendingstep->set_state(question_state::$needsgrading);
 
         return question_attempt::KEEP;

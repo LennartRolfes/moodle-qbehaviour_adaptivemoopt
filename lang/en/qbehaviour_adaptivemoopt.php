@@ -36,11 +36,11 @@ $string['alreadygradedsummary'] = 'The submission has already been graded. The l
 $string['checkIfChangeMessage'] = 'Be sure to check again after changing the submission. A finish will not regrade the new answer.';
 
 //general
-$string['notcomplete'] = 'Not complete';
 $string['pluginname'] = 'Adaptive mode for Moodle Programming Tasks (MooPT)';
 $string['privacy:metadata'] = 'The MooPT adaptive mode question behaviour plugin does not store any personal data.';
 
 //adaptive
+$string['notcomplete'] = 'Not complete';
 $string['disregardedwithoutpenalty'] = 'The submission was invalid, and has been disregarded without penalty.';
 $string['gradingdetails'] = 'Marks for this submission: {$a->raw}/{$a->max}.';
 $string['gradingdetailswithadjustment'] = 'Marks for this submission: {$a->raw}/{$a->max}. Accounting for previous tries, this gives <strong>{$a->cur}/{$a->max}</strong>.';
