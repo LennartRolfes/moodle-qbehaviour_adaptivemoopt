@@ -31,25 +31,25 @@ require_once(__DIR__ . '/../../../engine/lib.php');
 require_once(__DIR__ . '/../../../engine/tests/helpers.php');
 
 /**
- * Unit tests for the adaptive behaviour type class.
+ * Unit tests for the adaptivemoopt behaviour type class.
  *
- * @package    qbehaviour_adaptive
+ * @package    qbehaviour_adaptivemoopt
  * @category   test
  * @copyright  2015 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qbehaviouradaptive_type_test extends \basic_testcase {
+class behaviour_type_test extends \basic_testcase {
 
-    /** @var qbehaviour_adaptive_type */
+    /** @var qbehaviour_adaptivemoopt_type */
     protected $behaviourtype;
 
     public function setUp(): void {
         parent::setUp();
-        $this->behaviourtype = question_engine::get_behaviour_type('adaptive');
+        $this->behaviourtype = question_engine::get_behaviour_type('adaptivemoopt');
     }
 
     public function test_is_archetypal() {
-        $this->assertTrue($this->behaviourtype->is_archetypal());
+        $this->assertFalse($this->behaviourtype->is_archetypal());
     }
 
     public function test_get_unused_display_options() {
