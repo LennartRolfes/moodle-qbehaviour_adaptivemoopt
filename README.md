@@ -1,5 +1,17 @@
-# moodle_qbehaviour_adaptivemoopt
+# adaptive question behaviour for MooPT questions
 
-Question behaviour adaptive mode for MooPT. Belongs to bachelor thesis https://lab.it.hs-hannover.de/7mq-a3b-u1/bachelorarbeit-lennart-rolfes
+A description of all behaviours is available at the Moodle documentation.
 
-This is the code repository
+Visit: https://docs.moodle.org/310/en/Question_behaviours
+
+## install
+
+This question behaviour is only intended to be used with MooPT question.
+Without the MooPT question type this behaviour is not usable.
+Install this question type before you follow this manual.
+
+
+- first clone this folder into **.../moodle/question/behaviour/**
+- rename it to "adaptivemoopt"
+- select the adaptive behaviour when creating a quiz and add a MooPT question
+
